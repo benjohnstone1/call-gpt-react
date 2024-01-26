@@ -37,6 +37,22 @@ const PropertiesGenerator = (props) => {
         </select>
       </div>
       <div className="form-group">
+        <label>Enum: {props.propIndex}</label>
+        <input
+          className="form-control form-control-sm"
+          id={"enum"}
+          value={props.func[props.funcIndex].properties[props.propIndex].enum}
+          onChange={(e) =>
+            props.updateParamProps(
+              e.target.value,
+              props.funcIndex,
+              props.propIndex,
+              "enum"
+            )
+          }
+        />
+      </div>
+      <div className="form-group">
         <label>Description: {props.propIndex}</label>
         <input
           className="form-control form-control-sm"

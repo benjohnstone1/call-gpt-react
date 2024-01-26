@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 // Components
 import Home from "./components/Home";
 import Hackathon from "./components/Hackathon";
+import Footer from "./components/Footer";
 
 // Styles
 import "./styles/App.css";
@@ -33,6 +34,7 @@ function App() {
             </div>
           </Col>
         </Row>
+        <Footer />
       </Container>
     </div>
   );

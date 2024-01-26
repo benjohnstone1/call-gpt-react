@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FunctionGenerator from "./FunctionGenerator";
 import tools from "../tools";
+import axios from "axios";
 
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
@@ -16,6 +17,7 @@ const FunctionManifest = (props) => {
         {
           name: "",
           type: "String",
+          enum: [],
           desc: "",
         },
       ],
@@ -35,9 +37,10 @@ const FunctionManifest = (props) => {
 
   const populateSampleFunctions = () => {
     setFunc(sampleFunctions);
-    setNumFunctions(sampleFunctions.length); //update based on size of initialFunctions
-    setNumParamProperties([1]); //Easiest to do this manually! e.g. [1,2,1,1]
-    setNumObjectProperties([1]);
+    setNumFunctions(sampleFunctions.length);
+    setNumParamProperties([1, 1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
+    setNumObjectProperties([1, 1, 1, 1, 2]);
+    console.log(func);
   };
 
   const removeSampleFunctions = () => {
@@ -76,6 +79,9 @@ const FunctionManifest = (props) => {
         if (id === "type") {
           f.type = newParams;
         }
+        if (id === "enum") {
+          f.enum = newParams;
+        }
         return f;
       } else {
         return f;
@@ -106,7 +112,7 @@ const FunctionManifest = (props) => {
       }
     });
     setNumParamProperties(newNumParamProps); //not trying to add trying to replace use map
-    const newParams = { name: "", type: "String", desc: "" };
+    const newParams = { name: "", type: "String", enum: "", desc: "" };
     const insertParamProperties = [...func[funcIndex].properties, newParams];
     const nextFunc = {
       ...func[funcIndex],
@@ -258,6 +264,7 @@ const FunctionManifest = (props) => {
           {
             name: "",
             type: "String",
+            enum: [],
             desc: "",
           },
         ],
@@ -279,6 +286,25 @@ const FunctionManifest = (props) => {
       setNumObjectProperties(numObjectProperties.slice(0, numFunctions - 1)); //decrease array size
       setFunc(func.slice(0, numFunctions - 1));
     }
+  };
+
+  const createVirtualAgent = () => {
+    axios
+      .post("http://localhost:3000/hackathon/set-user-context", {
+        greeting: props.initialGreeting,
+        context: props.systemContext,
+        languageContext: props.languageSettings,
+        functionContext: func, //update to formData from functionGenrator V2
+      })
+      .then((response) => {
+        console.log(response);
+        // setResponse(response);
+        alert("Success! Created Virtual Agent");
+      })
+      .catch((e) => {
+        alert(e);
+        console.log(e);
+      });
   };
 
   for (let i = 0; i < numFunctions; i++) {
@@ -305,16 +331,25 @@ const FunctionManifest = (props) => {
         <div>
           <b>Function Manifest Generator</b>
         </div>
-        <button className="btn btn-primary" onClick={addFunction}>
+        <button onClick={createVirtualAgent} className="btn btn-success">
+          Create Virtual Agent
+        </button>
+        <button className="btn btn-outline-primary" onClick={addFunction}>
           + Add Function
         </button>
-        <button className="btn btn-danger" onClick={removeFunction}>
+        <button className="btn btn-outline-danger" onClick={removeFunction}>
           - Remove Function
         </button>
-        <button className="btn btn-warning" onClick={populateSampleFunctions}>
+        <button
+          className="btn btn-outline-warning"
+          onClick={populateSampleFunctions}
+        >
           Populate Sample Functions
         </button>
-        <button className="btn btn-secondary" onClick={removeSampleFunctions}>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={removeSampleFunctions}
+        >
           Remove Sample Functions
         </button>
         {functionManifest}

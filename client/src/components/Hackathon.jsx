@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "../styles/Hackathon.css";
 
 // Components
@@ -13,64 +13,9 @@ const Hackathon = () => {
     "Hello! I understand you're looking for a pair of AirPods, is that correct?"
   );
   const [languageSettings, setLanguageSettings] = useState("English & French");
-  const [functionGenerator, setFunctionGenerator] = useState(
-    "Need to generate function manifest file - Name, description, type (object), parameters, returns "
-  );
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState({
-    data: "Hello! I understand you're looking for a pair of AirPods, is that correct?",
-  });
-
-  const getOpenAIResponse = () => {
-    axios
-      .get("http://localhost:3000/hackathon/ask-gpt/" + prompt)
-      .then((response) => {
-        console.log(response);
-        setResponse(response);
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const createVirtualAgent = () => {
-    axios
-      .post("http://localhost:3000/hackathon/set-user-context", {
-        greeting: initialGreeting,
-        context: systemContext,
-        languageContext: languageSettings,
-        functionContext: functionGenerator, //update to formData from functionGenrator V2
-      })
-      .then((response) => {
-        console.log(response);
-        setResponse(response);
-        alert("Success! Created Virtual Agent");
-      })
-      .catch((e) => {
-        alert(e);
-        console.log(e);
-      });
-  };
 
   return (
     <div>
-      <h4>To do:</h4>
-      <p>
-        Function Generator - need to populate sample then work on pushing into
-        tools (back-end) Will need to also create generic functions for these in
-        back-end application
-      </p>
-      <p>
-        Update language settings to multi select dropdown - add this information
-        to System Context{" "}
-      </p>
-      <p>Flex transfer </p>
-      <p>
-        SMS use case - update endpoint for SMS and number to handle route in
-        back-end, remove reference to deepgram,elevenlabs{" "}
-      </p>
-      <p>
-        Bot tester - STRETCH Goal - add client SDK and show transcription in the
-        console (could do same for SMS)
-      </p>
       <h4>Bot Builder</h4>
       <div className="form-group">
         <label htmlFor="systemContext">System Context</label>
@@ -102,43 +47,31 @@ const Hackathon = () => {
           onChange={(e) => setInitialGreeting(e.target.value)}
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="functionGenerator">Function Generator</label>
-        <textarea
-          id="functionGenerator"
-          className="form-control"
-          value={functionGenerator}
-          placeholder="Function generator"
-          onChange={(e) => setFunctionGenerator(e.target.value)}
-        />
-      </div>
-      <FunctionManifest />
-      <button onClick={createVirtualAgent} className="btn btn-primary">
-        Create Virtual Agent
-      </button>
-      <h2>Bot Tester</h2>
-      <div className="form-group">
-        <label htmlFor="response">GPT</label>
-        <input
-          id="response"
-          className="form-control"
-          value={response.data}
-          onChange={(e) => setResponse(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="prompt">Prompt</label>
-        <input
-          id="prompt"
-          className="form-control"
-          value={prompt}
-          placeholder="Type your prompt here..."
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-      </div>
-      <button onClick={getOpenAIResponse} className="btn btn-primary">
-        Ask GPT
-      </button>
+      <FunctionManifest
+        initialGreeting={initialGreeting}
+        systemContext={systemContext}
+        languageSettings={languageSettings}
+      />
+
+      <h4>To do:</h4>
+      <p>
+        Function Generator - need to populate sample then work on pushing into
+        tools (back-end) Will need to also create generic functions for these in
+        back-end application
+      </p>
+      <p>
+        Update language settings to multi select dropdown - add this information
+        to System Context{" "}
+      </p>
+      <p>Flex transfer </p>
+      <p>
+        SMS use case - update endpoint for SMS and number to handle route in
+        back-end, remove reference to deepgram,elevenlabs{" "}
+      </p>
+      <p>
+        Bot tester - STRETCH Goal - add client SDK and show transcription in the
+        console (could do same for SMS)
+      </p>
     </div>
   );
 };

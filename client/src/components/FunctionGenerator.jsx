@@ -31,7 +31,7 @@ const FunctionGenerator = (props) => {
 
   return (
     <div>
-      <details open>
+      <details>
         <summary>
           <b>Function:{props.funcIndex} </b>
         </summary>
@@ -70,13 +70,13 @@ const FunctionGenerator = (props) => {
             <div className="col-1"></div>
             <div className="col-11">
               <button
-                className="btn btn-primary"
+                className="btn btn-outline-primary"
                 onClick={() => props.addParamProps(props.funcIndex)}
               >
                 + Add Properties
               </button>
               <button
-                className="btn btn-danger"
+                className="btn btn-outline-danger"
                 onClick={() => props.removeParamProps(props.funcIndex)}
               >
                 - Remove Properties
@@ -94,13 +94,13 @@ const FunctionGenerator = (props) => {
             <div className="col-10">
               <div></div>
               <button
-                className="btn btn-primary"
+                className="btn btn-outline-primary"
                 onClick={() => props.addObjectProps(props.funcIndex)}
               >
                 + Add Properties
               </button>
               <button
-                className="btn btn-danger"
+                className="btn btn-outline-danger"
                 onClick={() => props.removeObjectProps(props.funcIndex)}
               >
                 - Remove Properties
