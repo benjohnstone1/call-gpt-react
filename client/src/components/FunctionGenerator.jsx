@@ -3,25 +3,15 @@ import PropertiesGenerator from "./PropertiesGenerator";
 
 const FunctionGenerator = (props) => {
   const paramProperties = [];
-  const [numParamProperties, setNumParamProperties] = useState(1);
+  // const [numParamProperties, setNumParamProperties] = useState(1);
   const returnObjProperties = [];
   const [numReturnProperties, setNumReturnProperties] = useState(1);
   const [returnObjName, setReturnObjName] = useState("");
   const [returnObjDesc, setReturnObjDesc] = useState("");
 
-  for (let i = 0; i < numParamProperties; i++) {
+  for (let i = 0; i < props.numParamProperties; i++) {
     paramProperties.push(<PropertiesGenerator key={i} number={i} />);
   }
-
-  const addParamProps = () => {
-    setNumParamProperties(numParamProperties + 1);
-  };
-
-  const removeParamProps = () => {
-    if (numParamProperties > 1) {
-      setNumParamProperties(numParamProperties - 1);
-    }
-  };
 
   for (let i = 0; i < numReturnProperties; i++) {
     returnObjProperties.push(<PropertiesGenerator key={i} number={i} />);
@@ -77,10 +67,16 @@ const FunctionGenerator = (props) => {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-11">
-              <button className="btn btn-primary" onClick={addParamProps}>
+              <button
+                className="btn btn-primary"
+                onClick={() => props.addParamProps(props.number)}
+              >
                 + Add Properties
               </button>
-              <button className="btn btn-danger" onClick={removeParamProps}>
+              <button
+                className="btn btn-danger"
+                onClick={() => props.removeParamProps(props.number)}
+              >
                 - Remove Properties
               </button>
               {paramProperties}

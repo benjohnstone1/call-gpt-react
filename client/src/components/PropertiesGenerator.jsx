@@ -16,15 +16,8 @@ const PropertiesGenerator = (props) => {
 
   const [propData, setPropData] = useState(initialProperties);
 
-  const setSampleProps = () => {
-    alert("tbd");
-  };
-
   return (
     <>
-      <button className="btn btn-secondary" onClick={setSampleProps}>
-        Set Sample Properties
-      </button>
       <div className="form-group">
         <label>PropName - {props.number}</label>
         <input

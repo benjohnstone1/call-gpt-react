@@ -1,8 +1,12 @@
 import { useState } from "react";
 import FunctionGenerator from "./FunctionGenerator";
 
+// import update from "immutability-helper";
+
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
+  const [numParamProperties, setNumParamProperties] = useState(1);
+
   const [func, setFunc] = useState([
     {
       name: "name",
@@ -18,6 +22,13 @@ const FunctionManifest = (props) => {
         {
           name: "name",
           desc: "desc",
+          returnObjProperties: [
+            {
+              name: "language",
+              type: "String",
+              desc: "The types of languages the user could want to converse in",
+            },
+          ],
         },
       ],
     },
@@ -45,15 +56,81 @@ const FunctionManifest = (props) => {
     console.log(func);
   };
 
+  const addParamProps = (index) => {
+    setNumParamProperties(numParamProperties + 1);
+    const newParamProperties = [
+      ...func[index].properties,
+      { name: "", type: "String", desc: "" },
+    ]; //not iterable -?
+
+    const nextFunc = {
+      ...func[index],
+      properties: newParamProperties,
+    };
+
+    const f = func.map((c, i) => {
+      if (i === index) {
+        return nextFunc;
+      } else {
+        return c;
+      }
+    });
+
+    setFunc(f);
+    console.log(func[index].properties);
+  };
+
+  const removeParamProps = (index) => {
+    // not working for removal of multi functions
+    if (numParamProperties > 1) {
+      setNumParamProperties(numParamProperties - 1);
+      // Remove end property
+      const newParamProps = func[index].properties.slice(
+        0,
+        numParamProperties - 1
+      );
+      // Add new array into the function
+      const nextFunc = {
+        ...func[index],
+        properties: newParamProps,
+      };
+      // Map function array with new function
+      const f = func.map((c, i) => {
+        if (i === index) {
+          return nextFunc;
+        } else return c;
+      });
+      setFunc(f);
+    }
+  };
+
   const addFunction = () => {
     setNumFunctions(numFunctions + 1);
     setFunc([
       ...func,
       {
-        name: "",
-        desc: "",
-        properties: [],
-        returnObj: [],
+        name: "name",
+        desc: "desc",
+        properties: [
+          {
+            name: "language",
+            type: "String",
+            desc: "The types of languages the user could want to converse in",
+          },
+        ],
+        returnObj: [
+          {
+            name: "name",
+            desc: "desc",
+            returnObjProperties: [
+              {
+                name: "language",
+                type: "String",
+                desc: "The types of languages the user could want to converse in",
+              },
+            ],
+          },
+        ],
       },
     ]);
   };
@@ -72,6 +149,9 @@ const FunctionManifest = (props) => {
         number={i}
         func={func}
         updateFunc={updateFunc}
+        addParamProps={addParamProps}
+        numParamProperties={numParamProperties}
+        removeParamProps={removeParamProps}
       />
     );
   }
