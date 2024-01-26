@@ -5,62 +5,69 @@ import FunctionGenerator from "./FunctionGenerator";
 
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
-  const [numParamProperties, setNumParamProperties] = useState(1);
-  const [numObjectProperties, setNumObjectProperties] = useState(1);
+  const [numParamProperties, setNumParamProperties] = useState([1]);
+  const [numObjectProperties, setNumObjectProperties] = useState([1]);
   const functionManifest = [];
 
-  let initialFunctions = {
-    name: "",
-    desc: "",
-    properties: [
-      {
-        name: "",
-        type: "String",
-        desc: "",
-      },
-    ],
-    returnObjProperties: [
-      {
-        name: "",
-        type: "String",
-        desc: "",
-      },
-    ],
-  };
+  let initialFunctions = [
+    {
+      name: "",
+      desc: "",
+      properties: [
+        {
+          name: "",
+          type: "String",
+          desc: "",
+        },
+      ],
+      returnObjProperties: [
+        {
+          name: "",
+          type: "String",
+          desc: "",
+        },
+      ],
+    },
+  ];
 
-  let sampleFunctions = {
-    name: "name",
-    desc: "desc",
-    properties: [
-      {
-        name: "languages",
-        type: "String",
-        desc: "The types of languages the user could want to converse in",
-      },
-    ],
-    returnObjProperties: [
-      {
-        name: "locale",
-        type: "String",
-        desc: "The language locale that should be returned",
-      },
-    ],
-  };
+  let sampleFunctions = [
+    {
+      name: "name",
+      desc: "desc",
+      properties: [
+        {
+          name: "languages",
+          type: "String",
+          desc: "The types of languages the user could want to converse in",
+        },
+      ],
+      returnObjProperties: [
+        {
+          name: "locale",
+          type: "String",
+          desc: "The language locale that should be returned",
+        },
+      ],
+    },
+  ];
 
-  const [func, setFunc] = useState([initialFunctions]);
+  const [func, setFunc] = useState(initialFunctions);
 
+  //To do
   const populateSampleFunctions = () => {
-    setFunc([sampleFunctions]);
-    // setNumFunctions(1); //update based on size of initialFunctions
-    // setNumParamProperties(1);
-    // setNumParamProperties(1);
+    setFunc(sampleFunctions);
+    setNumFunctions(sampleFunctions.length); //update based on size of initialFunctions
+    // console.log(sampleFunctions.length);
+    // console.log(sampleFunctions.properties);
+    // setNumParamProperties(initialFunctions.properties.length); //likely easiest to do this manually! e.g. [1,2,1,1]
+    // setNumParamProperties(initialFunctions.returnObjProperties.length);
   };
 
   const removeSampleFunctions = () => {
-    setFunc([initialFunctions]);
+    setFunc(initialFunctions);
     setNumFunctions(1);
-    setNumParamProperties(1);
-    setNumParamProperties(1);
+    setNumParamProperties([1]);
+    setNumParamProperties([1]);
   };
 
   function updateFunc(newFunc, index, id) {
@@ -113,7 +120,15 @@ const FunctionManifest = (props) => {
   }
 
   const addParamProps = (funcIndex) => {
-    setNumParamProperties(numParamProperties + 1);
+    // we want [1] -> [2]
+    const newNumParamProps = numParamProperties.map((c, i) => {
+      if (i === funcIndex) {
+        return c + 1;
+      } else {
+        return c;
+      }
+    });
+    setNumParamProperties(newNumParamProps); //not trying to add trying to replace use map
     const newParams = { name: "", type: "String", desc: "" };
     const insertParamProperties = [...func[funcIndex].properties, newParams];
     const nextFunc = {
@@ -130,22 +145,31 @@ const FunctionManifest = (props) => {
     setFunc(f);
   };
 
-  const removeParamProps = (index) => {
-    if (numParamProperties > 1) {
-      setNumParamProperties(numParamProperties - 1);
+  const removeParamProps = (funcIndex) => {
+    // decrease number props
+    if (numParamProperties[funcIndex] > 1) {
+      const newNumParamProps = numParamProperties.map((c, i) => {
+        if (i === funcIndex) {
+          return c - 1;
+        } else {
+          return c;
+        }
+      });
+      setNumParamProperties(newNumParamProps);
       // Remove end property
-      const newParamProps = func[index].properties.slice(
+      const newParamProps = func[funcIndex].properties.slice(
         0,
-        numParamProperties - 1
+        numParamProperties[funcIndex] - 1
       );
       // Add new array into the function
       const nextFunc = {
-        ...func[index],
+        ...func[funcIndex],
         properties: newParamProps,
       };
-      // Map function array with new function
+      //   // Map function array with new function
+      //this is creating empty array of properties
       const f = func.map((c, i) => {
-        if (i === index) {
+        if (i === funcIndex) {
           return nextFunc;
         } else return c;
       });
@@ -153,19 +177,26 @@ const FunctionManifest = (props) => {
     }
   };
 
-  // need to update as nested - or update object struc
-  const addObjectProps = (index) => {
-    setNumObjectProperties(numObjectProperties + 1);
+  const addObjectProps = (funcIndex) => {
+    // Update object prop size
+    const newNumObjectProps = numObjectProperties.map((c, i) => {
+      if (i === funcIndex) {
+        return c + 1;
+      } else {
+        return c;
+      }
+    });
+    setNumObjectProperties(newNumObjectProps);
     const newObjectProperties = [
-      ...func[index].properties,
+      ...func[funcIndex].properties,
       { name: "", type: "String", desc: "" },
     ];
     const nextFunc = {
-      ...func[index],
+      ...func[funcIndex],
       properties: newObjectProperties,
     };
     const f = func.map((c, i) => {
-      if (i === index) {
+      if (i === funcIndex) {
         return nextFunc;
       } else {
         return c;
@@ -174,24 +205,29 @@ const FunctionManifest = (props) => {
     setFunc(f);
   };
 
-  // need to update as nested - or update object struc
-  const removeObjectProps = (index) => {
-    // not working for removal of multi functions
-    if (numObjectProperties > 1) {
-      setNumObjectProperties(numObjectProperties - 1);
+  const removeObjectProps = (funcIndex) => {
+    if (numObjectProperties[funcIndex] > 1) {
+      const newNumObjectProps = numObjectProperties.map((c, i) => {
+        if (i === funcIndex) {
+          return c - 1;
+        } else {
+          return c;
+        }
+      });
+      setNumObjectProperties(newNumObjectProps);
       // Remove end property
-      const newObjectProps = func[index].properties.slice(
+      const newObjectProps = func[funcIndex].properties.slice(
         0,
-        numObjectProperties - 1
+        numObjectProperties[funcIndex] - 1
       );
       // Add new array into the function
       const nextFunc = {
-        ...func[index],
-        properties: newObjectProps,
+        ...func[funcIndex],
+        returnObjProperties: newObjectProps,
       };
       // Map function array with new function
       const f = func.map((c, i) => {
-        if (i === index) {
+        if (i === funcIndex) {
           return nextFunc;
         } else return c;
       });
@@ -201,6 +237,9 @@ const FunctionManifest = (props) => {
 
   const addFunction = () => {
     setNumFunctions(numFunctions + 1);
+    setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
+    setNumObjectProperties([...numObjectProperties, 1]);
+    console.log(numParamProperties);
     setFunc([
       ...func,
       {
@@ -213,17 +252,11 @@ const FunctionManifest = (props) => {
             desc: "",
           },
         ],
-        returnObj: [
+        returnObjProperties: [
           {
             name: "",
+            type: "String",
             desc: "",
-            returnObjProperties: [
-              {
-                name: "",
-                type: "String",
-                desc: "",
-              },
-            ],
           },
         ],
       },
@@ -233,6 +266,8 @@ const FunctionManifest = (props) => {
   const removeFunction = () => {
     if (numFunctions > 1) {
       setNumFunctions(numFunctions - 1);
+      setNumParamProperties(numParamProperties.slice(0, numFunctions - 1)); //decrease array size e.g [2,1] becomes [2]
+      setNumObjectProperties(numObjectProperties.slice(0, numFunctions - 1)); //decrease array size
       setFunc(func.slice(0, numFunctions - 1));
     }
   };

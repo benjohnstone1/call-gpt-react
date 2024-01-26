@@ -4,7 +4,7 @@ const FunctionGenerator = (props) => {
   const paramProperties = [];
   const returnObjProperties = [];
 
-  for (let i = 0; i < props.numParamProperties; i++) {
+  for (let i = 0; i < props.numParamProperties[props.funcIndex]; i++) {
     paramProperties.push(
       <PropertiesGenerator
         key={i}
@@ -16,7 +16,7 @@ const FunctionGenerator = (props) => {
     );
   }
 
-  for (let i = 0; i < props.numObjectProperties; i++) {
+  for (let i = 0; i < props.numObjectProperties[props.funcIndex]; i++) {
     returnObjProperties.push(
       <PropertiesGenerator
         key={i}
