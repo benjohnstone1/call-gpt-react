@@ -9,29 +9,58 @@ const FunctionManifest = (props) => {
   const [numObjectProperties, setNumObjectProperties] = useState(1);
   const functionManifest = [];
 
-  const [func, setFunc] = useState([
-    {
-      name: "name",
-      desc: "desc",
-      properties: [
-        {
-          name: "languages",
-          type: "String",
-          desc: "The types of languages the user could want to converse in",
-        },
-      ],
-      returnObjProperties: [
-        {
-          name: "locale",
-          type: "String",
-          desc: "The language locale that should be returned",
-        },
-      ],
-    },
-  ]);
+  let initialFunctions = {
+    name: "",
+    desc: "",
+    properties: [
+      {
+        name: "",
+        type: "String",
+        desc: "",
+      },
+    ],
+    returnObjProperties: [
+      {
+        name: "",
+        type: "String",
+        desc: "",
+      },
+    ],
+  };
+
+  let sampleFunctions = {
+    name: "name",
+    desc: "desc",
+    properties: [
+      {
+        name: "languages",
+        type: "String",
+        desc: "The types of languages the user could want to converse in",
+      },
+    ],
+    returnObjProperties: [
+      {
+        name: "locale",
+        type: "String",
+        desc: "The language locale that should be returned",
+      },
+    ],
+  };
+
+  const [func, setFunc] = useState([initialFunctions]);
 
   const populateSampleFunctions = () => {
-    console.log(func);
+    setFunc([sampleFunctions]);
+    // setNumFunctions(1); //update based on size of initialFunctions
+    // setNumParamProperties(1);
+    // setNumParamProperties(1);
+  };
+
+  const removeSampleFunctions = () => {
+    setFunc([initialFunctions]);
+    setNumFunctions(1);
+    setNumParamProperties(1);
+    setNumParamProperties(1);
   };
 
   function updateFunc(newFunc, index, id) {
@@ -239,6 +268,9 @@ const FunctionManifest = (props) => {
         </button>
         <button className="btn btn-warning" onClick={populateSampleFunctions}>
           Populate Sample Functions
+        </button>
+        <button className="btn btn-secondary" onClick={removeSampleFunctions}>
+          Remove Sample Functions
         </button>
         {functionManifest}
       </div>
