@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FunctionGenerator from "./FunctionGenerator";
-
-// import update from "immutability-helper";
+import tools from "../tools";
 
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
@@ -30,37 +29,15 @@ const FunctionManifest = (props) => {
     },
   ];
 
-  let sampleFunctions = [
-    {
-      name: "name",
-      desc: "desc",
-      properties: [
-        {
-          name: "languages",
-          type: "String",
-          desc: "The types of languages the user could want to converse in",
-        },
-      ],
-      returnObjProperties: [
-        {
-          name: "locale",
-          type: "String",
-          desc: "The language locale that should be returned",
-        },
-      ],
-    },
-  ];
+  let sampleFunctions = tools;
 
   const [func, setFunc] = useState(initialFunctions);
 
-  //To do
   const populateSampleFunctions = () => {
     setFunc(sampleFunctions);
     setNumFunctions(sampleFunctions.length); //update based on size of initialFunctions
-    // console.log(sampleFunctions.length);
-    // console.log(sampleFunctions.properties);
-    // setNumParamProperties(initialFunctions.properties.length); //likely easiest to do this manually! e.g. [1,2,1,1]
-    // setNumParamProperties(initialFunctions.returnObjProperties.length);
+    setNumParamProperties([1]); //Easiest to do this manually! e.g. [1,2,1,1]
+    setNumObjectProperties([1]);
   };
 
   const removeSampleFunctions = () => {
@@ -177,6 +154,38 @@ const FunctionManifest = (props) => {
     }
   };
 
+  function updateObjectProps(newParams, funcIndex, propsIndex, id) {
+    const newParamsArr = func[funcIndex].returnObjProperties.map((f, i) => {
+      if (i === propsIndex) {
+        if (id === "desc") {
+          f.desc = newParams;
+        }
+        if (id === "name") {
+          f.name = newParams;
+        }
+        if (id === "type") {
+          f.type = newParams;
+        }
+        return f;
+      } else {
+        return f;
+      }
+    });
+    const nextFunc = {
+      ...func[funcIndex],
+      returnObjProperties: newParamsArr,
+    };
+    //need to re-insert this back then call set func
+    const f = func.map((c, i) => {
+      if (i === funcIndex) {
+        return nextFunc;
+      } else {
+        return c;
+      }
+    });
+    setFunc(f);
+  }
+
   const addObjectProps = (funcIndex) => {
     // Update object prop size
     const newNumObjectProps = numObjectProperties.map((c, i) => {
@@ -188,12 +197,12 @@ const FunctionManifest = (props) => {
     });
     setNumObjectProperties(newNumObjectProps);
     const newObjectProperties = [
-      ...func[funcIndex].properties,
+      ...func[funcIndex].returnObjProperties,
       { name: "", type: "String", desc: "" },
     ];
     const nextFunc = {
       ...func[funcIndex],
-      properties: newObjectProperties,
+      returnObjProperties: newObjectProperties,
     };
     const f = func.map((c, i) => {
       if (i === funcIndex) {
@@ -216,7 +225,7 @@ const FunctionManifest = (props) => {
       });
       setNumObjectProperties(newNumObjectProps);
       // Remove end property
-      const newObjectProps = func[funcIndex].properties.slice(
+      const newObjectProps = func[funcIndex].returnObjProperties.slice(
         0,
         numObjectProperties[funcIndex] - 1
       );
@@ -282,7 +291,8 @@ const FunctionManifest = (props) => {
         addParamProps={addParamProps}
         numParamProperties={numParamProperties}
         removeParamProps={removeParamProps}
-        updateParamProps={updateParamProps} // look at whether we just update func instead?
+        updateParamProps={updateParamProps}
+        updateObjectProps={updateObjectProps}
         addObjectProps={addObjectProps}
         numObjectProperties={numObjectProperties}
         removeObjectProps={removeObjectProps}
@@ -314,61 +324,3 @@ const FunctionManifest = (props) => {
 };
 
 export default FunctionManifest;
-
-// Example Function
-/*
-function
-    name
-    description
-    params {
-        properties {
-            prop1 {
-
-            }
-        }
-        required: [],
-    }
-    returns {
-        properties {
-            prop1 {
-
-            }
-        }
-    }
- {
-    type: "function",
-    function: {
-      name: "checkLanguage",
-      description:
-        "Check the language used in the conversation to know how to reply to the user, the user may choose to switch languages during the conversation",
-      parameters: {
-        type: "object",
-        properties: {
-          language: {
-            type: "string",
-            enum: ["english", "french", "italian", "spanish"],
-            description:
-              "The types of languages the user coule want to converse in",
-          },
-          prop2: {
-            type: "string",
-            // enum: ["es", "fr", "it", "es"],
-            description:
-              "desc",
-          },
-        },
-        required: ["language"], //need to get a value before calling it
-      },
-      returns: {
-        type: "object",
-        properties: {
-          locale: {
-            type: "string",
-            description: "The language locale that should be returned",
-          },
-        },
-      },
-    },
-  },
-
-  */

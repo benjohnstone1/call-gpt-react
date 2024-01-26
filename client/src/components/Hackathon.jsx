@@ -4,7 +4,6 @@ import "../styles/Hackathon.css";
 
 // Components
 import FunctionManifest from "./FunctionManifest";
-import FunctionKyle from "./FunctionGeneratorKyle";
 
 const Hackathon = () => {
   const [systemContext, setSystemContext] = useState(
@@ -114,7 +113,6 @@ const Hackathon = () => {
         />
       </div>
       <FunctionManifest />
-      {/* <FunctionKyle /> */}
       <button onClick={createVirtualAgent} className="btn btn-primary">
         Create Virtual Agent
       </button>

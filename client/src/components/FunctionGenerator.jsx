@@ -1,4 +1,5 @@
 import PropertiesGenerator from "./PropertiesGenerator";
+import ReturnObjProperties from "./ReturnObjPropertiesGenerator";
 
 const FunctionGenerator = (props) => {
   const paramProperties = [];
@@ -18,13 +19,12 @@ const FunctionGenerator = (props) => {
 
   for (let i = 0; i < props.numObjectProperties[props.funcIndex]; i++) {
     returnObjProperties.push(
-      <PropertiesGenerator
+      <ReturnObjProperties
         key={i}
         funcIndex={props.funcIndex}
         propIndex={i}
         func={props.func}
-        updateParamProps={props.updateParamProps} //need to remove?
-        updateObjectProps={props.updateObjectProps} //need to add
+        updateObjectProps={props.updateObjectProps}
       />
     );
   }
