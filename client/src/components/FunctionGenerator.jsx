@@ -1,60 +1,62 @@
-import { useState } from "react";
 import PropertiesGenerator from "./PropertiesGenerator";
 
 const FunctionGenerator = (props) => {
   const paramProperties = [];
-  // const [numParamProperties, setNumParamProperties] = useState(1);
   const returnObjProperties = [];
-  const [numReturnProperties, setNumReturnProperties] = useState(1);
-  const [returnObjName, setReturnObjName] = useState("");
-  const [returnObjDesc, setReturnObjDesc] = useState("");
 
   for (let i = 0; i < props.numParamProperties; i++) {
-    paramProperties.push(<PropertiesGenerator key={i} number={i} />);
+    paramProperties.push(
+      <PropertiesGenerator
+        key={i}
+        funcIndex={props.funcIndex}
+        propIndex={i}
+        func={props.func}
+        updateParamProps={props.updateParamProps}
+      />
+    );
   }
 
-  for (let i = 0; i < numReturnProperties; i++) {
-    returnObjProperties.push(<PropertiesGenerator key={i} number={i} />);
+  for (let i = 0; i < props.numObjectProperties; i++) {
+    returnObjProperties.push(
+      <PropertiesGenerator
+        key={i}
+        funcIndex={props.funcIndex}
+        propIndex={i}
+        func={props.func}
+        updateParamProps={props.updateParamProps} //need to remove?
+        updateObjectProps={props.updateObjectProps} //need to add
+      />
+    );
   }
-
-  const addReturnProps = () => {
-    setNumReturnProperties(numReturnProperties + 1);
-  };
-
-  const removeReturnProps = () => {
-    if (numReturnProperties > 1) {
-      setNumReturnProperties(numReturnProperties - 1);
-    }
-  };
 
   return (
     <div>
       <details open>
         <summary>
-          <b>Function:{props.number} </b>
+          <b>Function:{props.funcIndex} </b>
         </summary>
         <div className="form-group">
           <div className="row">
             <div className="col-12">
               <div>
-                <b>Function:{props.number} </b>
+                <b>Function:{props.funcIndex} </b>
               </div>
               <label>Function Name</label>
               <input
                 className="form-control form-control-sm"
-                id={"name" + props.number}
-                value={props.func[props.number].name}
+                id={"name" + props.funcIndex}
+                value={props.func[props.funcIndex].name}
                 onChange={(e) =>
-                  props.updateFunc(e.target.value, props.number, "name")
+                  props.updateFunc(e.target.value, props.funcIndex, "name")
                 }
               />
               <label>Function Description</label>
               <input
                 className="form-control form-control-sm"
-                id={"desc" + props.number}
-                value={props.func[props.number].desc}
+                id={"desc" + props.funcIndex}
+                value={props.func[props.funcIndex].desc}
                 onChange={(e) =>
-                  props.updateFunc(e.target.value, props.number, "desc")
+                  props.updateFunc(e.target.value, props.funcIndex, "desc")
                 }
               />
             </div>
@@ -62,66 +64,45 @@ const FunctionGenerator = (props) => {
         </div>
         <details open>
           <summary>
-            <b>Function Params:{props.number}</b>
+            <b>Function Params:{props.funcIndex}</b>
           </summary>
           <div className="row">
             <div className="col-1"></div>
             <div className="col-11">
               <button
                 className="btn btn-primary"
-                onClick={() => props.addParamProps(props.number)}
+                onClick={() => props.addParamProps(props.funcIndex)}
               >
                 + Add Properties
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => props.removeParamProps(props.number)}
+                onClick={() => props.removeParamProps(props.funcIndex)}
               >
                 - Remove Properties
               </button>
               {paramProperties}
             </div>
-          </div>{" "}
+          </div>
         </details>
         <details open>
           <summary>
-            <b>Return Object:{props.number} </b>
+            <b>Return Object Properties: {props.funcIndex}</b>
           </summary>
           <div className="row">
             <div className="col-2"></div>
             <div className="col-10">
               <div></div>
-              <div className="form-group">
-                <label>Return Object Name</label>
-                <input
-                  className="form-control form-control-sm"
-                  id={returnObjName}
-                  value={returnObjName}
-                  onChange={(e) => setReturnObjName(e.target.value)}
-                />
-                <label>Return Object Description</label>
-                <input
-                  className="form-control form-control-sm"
-                  id={returnObjDesc}
-                  value={returnObjDesc}
-                  onChange={(e) => setReturnObjDesc(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-        </details>
-        <details open>
-          <summary>
-            <b>Return Object Properties</b>
-          </summary>
-          <div className="row">
-            <div className="col-3"></div>
-            <div className="col-9">
-              <div></div>
-              <button className="btn btn-primary" onClick={addReturnProps}>
+              <button
+                className="btn btn-primary"
+                onClick={() => props.addObjectProps(props.funcIndex)}
+              >
                 + Add Properties
               </button>
-              <button className="btn btn-danger" onClick={removeReturnProps}>
+              <button
+                className="btn btn-danger"
+                onClick={() => props.removeObjectProps(props.funcIndex)}
+              >
                 - Remove Properties
               </button>
               {returnObjProperties}

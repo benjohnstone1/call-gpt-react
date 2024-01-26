@@ -1,42 +1,35 @@
-import { useState } from "react";
-
 const PropertiesGenerator = (props) => {
-  const initialProperties = [
-    {
-      name: "language",
-      type: "String",
-      desc: "The types of languages the user could want to converse in",
-    },
-    {
-      name: "prop1",
-      type: "String",
-      desc: "prop1 desc",
-    },
-  ];
-
-  const [propData, setPropData] = useState(initialProperties);
-
   return (
     <>
       <div className="form-group">
-        <label>PropName - {props.number}</label>
+        <label>PropName: {props.propIndex}</label>
         <input
           className="form-control form-control-sm"
-          id={propData[props.number]?.name}
-          value={propData[props.number]?.name}
+          id={"name"}
+          value={props.func[props.funcIndex].properties[props.propIndex].name}
           onChange={(e) =>
-            setPropData({ ...propData[props.number], name: e.target.value })
+            props.updateParamProps(
+              e.target.value,
+              props.funcIndex,
+              props.propIndex,
+              "name"
+            )
           }
         />
       </div>
       <div className="form-group">
-        <label>Type - {props.number}</label>
+        <label>Type: {props.propIndex}</label>
         <select
           className="form-control form-control-sm"
-          id={propData[props.number]?.type}
-          value={propData[props.number]?.type}
+          id={"type"}
+          value={props.func[props.funcIndex].properties[props.propIndex].type}
           onChange={(e) =>
-            setPropData({ ...propData[[props.number]], type: e.target.value })
+            props.updateParamProps(
+              e.target.value,
+              props.funcIndex,
+              props.propIndex,
+              "type"
+            )
           }
         >
           <option value="String">String</option>
@@ -44,13 +37,18 @@ const PropertiesGenerator = (props) => {
         </select>
       </div>
       <div className="form-group">
-        <label>Description - {props.number}</label>
+        <label>Description: {props.propIndex}</label>
         <input
           className="form-control form-control-sm"
-          id={propData[props.number]?.desc}
-          value={propData[props.number]?.desc}
+          id={"desc"}
+          value={props.func[props.funcIndex].properties[props.propIndex].desc}
           onChange={(e) =>
-            setPropData({ ...propData[props.number], desc: e.target.value })
+            props.updateParamProps(
+              e.target.value,
+              props.funcIndex,
+              props.propIndex,
+              "desc"
+            )
           }
         />
       </div>

@@ -6,6 +6,8 @@ import FunctionGenerator from "./FunctionGenerator";
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
   const [numParamProperties, setNumParamProperties] = useState(1);
+  const [numObjectProperties, setNumObjectProperties] = useState(1);
+  const functionManifest = [];
 
   const [func, setFunc] = useState([
     {
@@ -13,26 +15,24 @@ const FunctionManifest = (props) => {
       desc: "desc",
       properties: [
         {
-          name: "language",
+          name: "languages",
           type: "String",
           desc: "The types of languages the user could want to converse in",
         },
       ],
-      returnObj: [
+      returnObjProperties: [
         {
-          name: "name",
-          desc: "desc",
-          returnObjProperties: [
-            {
-              name: "language",
-              type: "String",
-              desc: "The types of languages the user could want to converse in",
-            },
-          ],
+          name: "locale",
+          type: "String",
+          desc: "The language locale that should be returned",
         },
       ],
     },
   ]);
+
+  const populateSampleFunctions = () => {
+    console.log(func);
+  };
 
   function updateFunc(newFunc, index, id) {
     const newFuncArr = func.map((f, i) => {
@@ -50,38 +50,58 @@ const FunctionManifest = (props) => {
     });
     setFunc(newFuncArr);
   }
-  const functionManifest = [];
 
-  const populateSampleFunctions = () => {
-    console.log(func);
-  };
-
-  const addParamProps = (index) => {
-    setNumParamProperties(numParamProperties + 1);
-    const newParamProperties = [
-      ...func[index].properties,
-      { name: "", type: "String", desc: "" },
-    ]; //not iterable -?
-
+  function updateParamProps(newParams, funcIndex, propsIndex, id) {
+    const newParamsArr = func[funcIndex].properties.map((f, i) => {
+      if (i === propsIndex) {
+        if (id === "desc") {
+          f.desc = newParams;
+        }
+        if (id === "name") {
+          f.name = newParams;
+        }
+        if (id === "type") {
+          f.type = newParams;
+        }
+        return f;
+      } else {
+        return f;
+      }
+    });
     const nextFunc = {
-      ...func[index],
-      properties: newParamProperties,
+      ...func[funcIndex],
+      properties: newParamsArr,
     };
-
+    //need to re-insert this back then call set func
     const f = func.map((c, i) => {
-      if (i === index) {
+      if (i === funcIndex) {
         return nextFunc;
       } else {
         return c;
       }
     });
-
     setFunc(f);
-    console.log(func[index].properties);
+  }
+
+  const addParamProps = (funcIndex) => {
+    setNumParamProperties(numParamProperties + 1);
+    const newParams = { name: "", type: "String", desc: "" };
+    const insertParamProperties = [...func[funcIndex].properties, newParams];
+    const nextFunc = {
+      ...func[funcIndex],
+      properties: insertParamProperties,
+    };
+    const f = func.map((c, i) => {
+      if (i === funcIndex) {
+        return nextFunc;
+      } else {
+        return c;
+      }
+    });
+    setFunc(f);
   };
 
   const removeParamProps = (index) => {
-    // not working for removal of multi functions
     if (numParamProperties > 1) {
       setNumParamProperties(numParamProperties - 1);
       // Remove end property
@@ -104,29 +124,75 @@ const FunctionManifest = (props) => {
     }
   };
 
+  // need to update as nested - or update object struc
+  const addObjectProps = (index) => {
+    setNumObjectProperties(numObjectProperties + 1);
+    const newObjectProperties = [
+      ...func[index].properties,
+      { name: "", type: "String", desc: "" },
+    ];
+    const nextFunc = {
+      ...func[index],
+      properties: newObjectProperties,
+    };
+    const f = func.map((c, i) => {
+      if (i === index) {
+        return nextFunc;
+      } else {
+        return c;
+      }
+    });
+    setFunc(f);
+  };
+
+  // need to update as nested - or update object struc
+  const removeObjectProps = (index) => {
+    // not working for removal of multi functions
+    if (numObjectProperties > 1) {
+      setNumObjectProperties(numObjectProperties - 1);
+      // Remove end property
+      const newObjectProps = func[index].properties.slice(
+        0,
+        numObjectProperties - 1
+      );
+      // Add new array into the function
+      const nextFunc = {
+        ...func[index],
+        properties: newObjectProps,
+      };
+      // Map function array with new function
+      const f = func.map((c, i) => {
+        if (i === index) {
+          return nextFunc;
+        } else return c;
+      });
+      setFunc(f);
+    }
+  };
+
   const addFunction = () => {
     setNumFunctions(numFunctions + 1);
     setFunc([
       ...func,
       {
-        name: "name",
-        desc: "desc",
+        name: "",
+        desc: "",
         properties: [
           {
-            name: "language",
+            name: "",
             type: "String",
-            desc: "The types of languages the user could want to converse in",
+            desc: "",
           },
         ],
         returnObj: [
           {
-            name: "name",
-            desc: "desc",
+            name: "",
+            desc: "",
             returnObjProperties: [
               {
-                name: "language",
+                name: "",
                 type: "String",
-                desc: "The types of languages the user could want to converse in",
+                desc: "",
               },
             ],
           },
@@ -146,12 +212,16 @@ const FunctionManifest = (props) => {
     functionManifest.push(
       <FunctionGenerator
         key={i}
-        number={i}
+        funcIndex={i}
         func={func}
         updateFunc={updateFunc}
         addParamProps={addParamProps}
         numParamProperties={numParamProperties}
         removeParamProps={removeParamProps}
+        updateParamProps={updateParamProps} // look at whether we just update func instead?
+        addObjectProps={addObjectProps}
+        numObjectProperties={numObjectProperties}
+        removeObjectProps={removeObjectProps}
       />
     );
   }
