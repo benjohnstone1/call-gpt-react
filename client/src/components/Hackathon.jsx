@@ -3,7 +3,8 @@ import axios from "axios";
 import "../styles/Hackathon.css";
 
 // Components
-import FunctionGenerator from "./FunctionGenerator";
+import FunctionManifest from "./FunctionManifest";
+import FunctionKyle from "./FunctionGeneratorKyle";
 
 const Hackathon = () => {
   const [systemContext, setSystemContext] = useState(
@@ -52,11 +53,26 @@ const Hackathon = () => {
 
   return (
     <div>
-      <h2>Bot Builder</h2>
+      <h4>To do:</h4>
       <p>
-        To do: Function Generator - Need to generate functions & function
-        manifest file Language Generator
+        Function Generator - need to populate sample then work on pushing into
+        tools (back-end) Will need to also create generic functions for these in
+        back-end application
       </p>
+      <p>
+        Update language settings to multi select dropdown - add this information
+        to System Context{" "}
+      </p>
+      <p>Flex transfer </p>
+      <p>
+        SMS use case - update endpoint for SMS and number to handle route in
+        back-end, remove reference to deepgram,elevenlabs{" "}
+      </p>
+      <p>
+        Bot tester - STRETCH Goal - add client SDK and show transcription in the
+        console (could do same for SMS)
+      </p>
+      <h4>Bot Builder</h4>
       <div className="form-group">
         <label htmlFor="systemContext">System Context</label>
         <textarea
@@ -97,20 +113,12 @@ const Hackathon = () => {
           onChange={(e) => setFunctionGenerator(e.target.value)}
         />
       </div>
-      <FunctionGenerator />
-      {/* </form> */}
-      <button
-        // type="submit"
-        onClick={createVirtualAgent}
-        className="btn btn-primary"
-      >
+      <FunctionManifest />
+      {/* <FunctionKyle /> */}
+      <button onClick={createVirtualAgent} className="btn btn-primary">
         Create Virtual Agent
       </button>
       <h2>Bot Tester</h2>
-      <p>
-        To Do: Add voice sdk soft client to make call from browser, show output
-        from media in dialogbox as it's spoken
-      </p>
       <div className="form-group">
         <label htmlFor="response">GPT</label>
         <input
