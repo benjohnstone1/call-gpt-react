@@ -16,7 +16,6 @@ const FunctionManifest = (props) => {
     {
       name: "",
       desc: "",
-      // webhookURL: { webhook },
       properties: [
         {
           name: "",
@@ -61,7 +60,6 @@ const FunctionManifest = (props) => {
         }
         if (id === "name") {
           f.name = newFunc;
-          f.webhookURL = webhook + "/" + newFunc;
         }
         return f;
       } else {
@@ -259,13 +257,11 @@ const FunctionManifest = (props) => {
     setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
     setNumObjectProperties([...numObjectProperties, 1]);
     console.log(numParamProperties);
-    // [{},...,{}] func[0].webhookurl = webhook + "/" + func.name
     setFunc([
       ...func,
       {
         name: "",
         desc: "",
-        // webhookURL: webhook + "/" + func.name,
         properties: [
           {
             name: "",

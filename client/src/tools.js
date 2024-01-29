@@ -2,7 +2,6 @@ const sampleFunctions = [
   {
     name: "sendToFlex",
     desc: "If user wants to speak with a human agent or if you don't understand the request after trying to clarify multiple times",
-    // webhookURL: "https://hackathon-open-ai-2890.twil.io/sendToFlex",
     properties: [
       {
         name: "language",
@@ -22,7 +21,6 @@ const sampleFunctions = [
   {
     name: "checkLanguage",
     desc: "Check the language used in the conversation to know how to reply to the user, the user may choose to switch languages during the conversation",
-    // webhookURL: "https://hackathon-open-ai-2890.twil.io/checkLanguage",
     properties: [
       {
         name: "language",
@@ -42,7 +40,6 @@ const sampleFunctions = [
   {
     name: "checkInventory",
     desc: "Check the inventory of airpods, airpods pro or airpods max.",
-    // webhookURL: "https://hackathon-open-ai-2890.twil.io/checkInventory",
     properties: [
       {
         name: "model",
@@ -62,7 +59,6 @@ const sampleFunctions = [
   {
     name: "checkPrice",
     desc: "Check the price of given model of airpods, airpods pro or airpods max.",
-    // webhookURL: "https://hackathon-open-ai-2890.twil.io/checkPrice",
     properties: [
       {
         name: "model",
@@ -82,7 +78,6 @@ const sampleFunctions = [
   {
     name: "placeOrder",
     desc: "Places an order for a set of airpods.",
-    // webhookURL: "https://hackathon-open-ai-2890.twil.io/placeOrder",
     properties: [
       {
         name: "model",
