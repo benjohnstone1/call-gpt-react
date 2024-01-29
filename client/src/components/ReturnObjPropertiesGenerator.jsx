@@ -38,8 +38,8 @@ const ReturnObjPropertiesGenerator = (props) => {
             )
           }
         >
-          <option value="String">String</option>
-          <option value="Int">Int</option>
+          <option value="string">string</option>
+          <option value="int">int</option>
         </select>
       </div>
       <div className="form-group">

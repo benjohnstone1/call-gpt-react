@@ -7,12 +7,16 @@ const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
   const [numParamProperties, setNumParamProperties] = useState([1]);
   const [numObjectProperties, setNumObjectProperties] = useState([1]);
+  const [webhook, setWebhook] = useState(
+    "https://hackathon-open-ai-2890.twil.io"
+  );
   const functionManifest = [];
 
   let initialFunctions = [
     {
       name: "",
       desc: "",
+      // webhookURL: { webhook },
       properties: [
         {
           name: "",
@@ -40,7 +44,6 @@ const FunctionManifest = (props) => {
     setNumFunctions(sampleFunctions.length);
     setNumParamProperties([1, 1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
     setNumObjectProperties([1, 1, 1, 1, 2]);
-    console.log(func);
   };
 
   const removeSampleFunctions = () => {
@@ -58,6 +61,7 @@ const FunctionManifest = (props) => {
         }
         if (id === "name") {
           f.name = newFunc;
+          f.webhookURL = webhook + "/" + newFunc;
         }
         return f;
       } else {
@@ -255,11 +259,13 @@ const FunctionManifest = (props) => {
     setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
     setNumObjectProperties([...numObjectProperties, 1]);
     console.log(numParamProperties);
+    // [{},...,{}] func[0].webhookurl = webhook + "/" + func.name
     setFunc([
       ...func,
       {
         name: "",
         desc: "",
+        // webhookURL: webhook + "/" + func.name,
         properties: [
           {
             name: "",
@@ -288,17 +294,24 @@ const FunctionManifest = (props) => {
     }
   };
 
+  const updateWebhookEndpoint = (e) => {
+    setWebhook(e.target.value);
+  };
+
   const createVirtualAgent = () => {
+    for (let i = 0; i < func.length; i++) {
+      func[i].webhookURL = webhook + "/" + func[i].name;
+    }
+    console.log(func);
     axios
       .post("http://localhost:3000/hackathon/set-user-context", {
         greeting: props.initialGreeting,
         context: props.systemContext,
         languageContext: props.languageSettings,
-        functionContext: func, //update to formData from functionGenrator V2
+        functionContext: func,
       })
       .then((response) => {
         console.log(response);
-        // setResponse(response);
         alert("Success! Created Virtual Agent");
       })
       .catch((e) => {
@@ -322,6 +335,7 @@ const FunctionManifest = (props) => {
         addObjectProps={addObjectProps}
         numObjectProperties={numObjectProperties}
         removeObjectProps={removeObjectProps}
+        webhook={webhook}
       />
     );
   }
@@ -352,6 +366,15 @@ const FunctionManifest = (props) => {
         >
           Remove Sample Functions
         </button>
+        <div>
+          <label>Function Webhook Endpoint</label>
+          <input
+            className="form-control form-control-sm"
+            id={"webhook"}
+            value={webhook}
+            onChange={(e) => updateWebhookEndpoint(e)}
+          />
+        </div>
         {functionManifest}
       </div>
     </div>

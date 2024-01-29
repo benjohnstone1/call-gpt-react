@@ -59,6 +59,16 @@ const FunctionGenerator = (props) => {
                   props.updateFunc(e.target.value, props.funcIndex, "desc")
                 }
               />
+              <label>Function Webhook Path</label>
+              <input
+                className="form-control form-control-sm"
+                id={"webhook"}
+                value={props.webhook + "/" + props.func[props.funcIndex].name}
+                readOnly={true}
+                // onChange={(e) =>
+                //   props.updateFunc(e.target.value, props.funcIndex, "webhook")
+                // }
+              />
             </div>
           </div>
         </div>

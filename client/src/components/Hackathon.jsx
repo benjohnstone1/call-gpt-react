@@ -13,10 +13,24 @@ const Hackathon = () => {
     "Hello! I understand you're looking for a pair of AirPods, is that correct?"
   );
   const [languageSettings, setLanguageSettings] = useState("English & French");
+  const [template, setTemplate] = useState("");
 
   return (
     <div>
       <h4>Bot Builder</h4>
+      <div className="form-group">
+        <label>Template Selection: </label>
+        <select
+          className="form-control form-control-sm"
+          id={"template"}
+          value={template}
+          onChange={(e) => setTemplate(e.target.value)}
+        >
+          <option value="airpods">Airpods Pro</option>
+          <option value="example2">Example 2</option>
+          <option value="build">Build Your Own</option>
+        </select>
+      </div>
       <div className="form-group">
         <label htmlFor="systemContext">System Context</label>
         <textarea
@@ -54,24 +68,12 @@ const Hackathon = () => {
       />
 
       <h4>To do:</h4>
-      <p>
-        Function Generator - need to populate sample then work on pushing into
-        tools (back-end) Will need to also create generic functions for these in
-        back-end application
-      </p>
-      <p>
-        Update language settings to multi select dropdown - add this information
-        to System Context{" "}
-      </p>
-      <p>Flex transfer </p>
-      <p>
-        SMS use case - update endpoint for SMS and number to handle route in
-        back-end, remove reference to deepgram,elevenlabs{" "}
-      </p>
-      <p>
-        Bot tester - STRETCH Goal - add client SDK and show transcription in the
-        console (could do same for SMS)
-      </p>
+      <p>Fix webhook endpoint functionality - updates</p>
+      <p>Create templates - airpods pro + another example</p>
+      <p>Create modals for function generator?</p>
+      <p>Flex transfer update sendToFlex serverless </p>
+      <p>Quickly deploy serverless w/ examples</p>
+      <p>Deploy working application</p>
     </div>
   );
 };
