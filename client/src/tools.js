@@ -1,23 +1,23 @@
 const sampleFunctions = [
-  {
-    name: "sendToFlex",
-    desc: "If user wants to speak with a human agent or if you don't understand the request after trying to clarify multiple times",
-    properties: [
-      {
-        name: "language",
-        type: "String",
-        enum: ["english", "french", "italian", "spanish"],
-        desc: "The types of languages the user could want to converse in",
-      },
-    ],
-    returnObjProperties: [
-      {
-        name: "locale",
-        type: "String",
-        desc: "The language locale that should be returned",
-      },
-    ],
-  },
+  // {
+  //   name: "sendToFlex",
+  //   desc: "If user wants to speak with a human agent or if you don't understand the request after trying to clarify multiple times",
+  //   properties: [
+  //     {
+  //       name: "language",
+  //       type: "String",
+  //       enum: ["english", "french", "italian", "spanish"],
+  //       desc: "The types of languages the user could want to converse in",
+  //     },
+  //   ],
+  //   returnObjProperties: [
+  //     {
+  //       name: "locale",
+  //       type: "String",
+  //       desc: "The language locale that should be returned",
+  //     },
+  //   ],
+  // },
   {
     name: "checkLanguage",
     desc: "Check the language used in the conversation to know how to reply to the user, the user may choose to switch languages during the conversation",

@@ -41,8 +41,8 @@ const FunctionManifest = (props) => {
   const populateSampleFunctions = () => {
     setFunc(sampleFunctions);
     setNumFunctions(sampleFunctions.length);
-    setNumParamProperties([1, 1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
-    setNumObjectProperties([1, 1, 1, 1, 2]);
+    setNumParamProperties([1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
+    setNumObjectProperties([1, 1, 1, 2]);
   };
 
   const removeSampleFunctions = () => {

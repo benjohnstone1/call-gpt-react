@@ -24,7 +24,7 @@ const Hackathon = () => {
       setInitialGreeting(
         "Hello! I understand you're looking for a pair of AirPods, is that correct?"
       );
-      setLanguageSettings("English");
+      setLanguageSettings("English & French");
     } else if (e.target.value === "Example 2") {
       setSystemContext("");
       setInitialGreeting("");
@@ -48,7 +48,7 @@ const Hackathon = () => {
           onChange={(e) => handleTemplateChange(e)}
         >
           <option value="Apple Airpods">Apple Airpods</option>
-          <option value="Example 2">Example 2</option>
+          {/* <option value="Example 2">Example 2</option> */}
           <option value="Build Your Own">Build Your Own</option>
         </select>
       </div>
@@ -87,14 +87,6 @@ const Hackathon = () => {
         systemContext={systemContext}
         languageSettings={languageSettings}
       />
-
-      <h4>To do:</h4>
-      <p>Fix webhook endpoint functionality - updates</p>
-      <p>Create templates - airpods pro + another example</p>
-      <p>Create modals for function generator?</p>
-      <p>Flex transfer update sendToFlex serverless </p>
-      <p>Quickly deploy serverless w/ examples</p>
-      <p>Deploy working application</p>
     </div>
   );
 };
