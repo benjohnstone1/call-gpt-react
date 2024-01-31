@@ -339,31 +339,31 @@ const FunctionManifest = (props) => {
     <div>
       <div style={{ border: "1px solid black" }} className="container">
         <div>
-          <b>Function Manifest Generator</b>
+          <b>Define Bot Fulfillment Actions</b>
         </div>
         <button onClick={createVirtualAgent} className="btn btn-success">
           Create Virtual Agent
         </button>
         <button className="btn btn-outline-primary" onClick={addFunction}>
-          + Add Function
+          + Add Action
         </button>
         <button className="btn btn-outline-danger" onClick={removeFunction}>
-          - Remove Function
+          - Remove Action
         </button>
         <button
           className="btn btn-outline-warning"
           onClick={populateSampleFunctions}
         >
-          Populate Sample Functions
+          Populate Sample Actions
         </button>
         <button
           className="btn btn-outline-secondary"
           onClick={removeSampleFunctions}
         >
-          Remove Sample Functions
+          Remove Sample Actions
         </button>
         <div>
-          <label>Function Webhook Endpoint</label>
+          <label>Webhook Endpoint</label>
           <input
             className="form-control form-control-sm"
             id={"webhook"}

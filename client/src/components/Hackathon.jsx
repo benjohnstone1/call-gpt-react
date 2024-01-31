@@ -82,6 +82,7 @@ const Hackathon = () => {
           onChange={(e) => setInitialGreeting(e.target.value)}
         />
       </div>
+      <div>{""}</div>
       <FunctionManifest
         initialGreeting={initialGreeting}
         systemContext={systemContext}
