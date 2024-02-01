@@ -38,14 +38,16 @@ const FunctionManifest = (props) => {
 
   const [func, setFunc] = useState(initialFunctions);
 
-  const populateSampleFunctions = () => {
+  const populateSampleFunctions = (e) => {
+    e.preventDefault();
     setFunc(sampleFunctions);
     setNumFunctions(sampleFunctions.length);
     setNumParamProperties([1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
     setNumObjectProperties([1, 1, 1, 2]);
   };
 
-  const removeSampleFunctions = () => {
+  const removeSampleFunctions = (e) => {
+    e.preventDefault();
     setFunc(initialFunctions);
     setNumFunctions(1);
     setNumParamProperties([1]);
@@ -252,7 +254,8 @@ const FunctionManifest = (props) => {
     }
   };
 
-  const addFunction = () => {
+  const addFunction = (e) => {
+    e.preventDefault();
     setNumFunctions(numFunctions + 1);
     setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
     setNumObjectProperties([...numObjectProperties, 1]);
@@ -281,7 +284,8 @@ const FunctionManifest = (props) => {
     ]);
   };
 
-  const removeFunction = () => {
+  const removeFunction = (e) => {
+    e.preventDefault();
     if (numFunctions > 1) {
       setNumFunctions(numFunctions - 1);
       setNumParamProperties(numParamProperties.slice(0, numFunctions - 1)); //decrease array size e.g [2,1] becomes [2]
@@ -294,13 +298,14 @@ const FunctionManifest = (props) => {
     setWebhook(e.target.value);
   };
 
-  const createVirtualAgent = () => {
+  const createVirtualAgent = (e) => {
+    e.preventDefault();
     for (let i = 0; i < func.length; i++) {
       func[i].webhookURL = webhook + "/" + func[i].name;
     }
     console.log(func);
     axios
-      .post("http://localhost:3000/hackathon/set-user-context", {
+      .post("https://call-gpt-hack.fly.dev/hackathon/set-user-context", {
         greeting: props.initialGreeting,
         context: props.systemContext,
         languageContext: props.languageSettings,
