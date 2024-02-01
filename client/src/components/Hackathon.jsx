@@ -193,8 +193,6 @@ const Hackathon = () => {
             systemContext={systemContext}
             languageSettings={languageSettings}
             />
-
-            <HelpText id="function_generator_help_text">Actions are APIs that your agent can use to retreive information or perform tasks.</HelpText>
           </FormControl>
           {/* <FormActions>
             <Button variant="primary" onClick={""}>Create Virtual Agent</Button>

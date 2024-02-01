@@ -1,7 +1,11 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import FunctionGenerator from "./FunctionGenerator";
 import tools from "../tools";
 import axios from "axios";
+
+import {Button} from '@twilio-paste/core/button';
+import {HelpText} from '@twilio-paste/core/help-text';
+import {AlertDialog} from '@twilio-paste/core/alert-dialog';
 
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
@@ -11,6 +15,9 @@ const FunctionManifest = (props) => {
     "https://hackathon-open-ai-2890.twil.io"
   );
   const functionManifest = [];
+  const [isOpen, setIsOpen] = React.useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   let initialFunctions = [
     {
@@ -313,7 +320,8 @@ const FunctionManifest = (props) => {
       })
       .then((response) => {
         console.log(response);
-        alert("Success! Created Virtual Agent");
+        //alert("Success! Created Virtual Agent");
+        handleOpen();
       })
       .catch((e) => {
         alert(e);
@@ -346,15 +354,13 @@ const FunctionManifest = (props) => {
         <div>
           <b>Function Manifest Generator</b>
         </div>
-        <button onClick={createVirtualAgent} className="btn btn-success">
-          Create Virtual Agent
-        </button>
         <button className="btn btn-outline-primary" onClick={addFunction}>
           + Add Function
         </button>
         <button className="btn btn-outline-danger" onClick={removeFunction}>
           - Remove Function
         </button>
+        <br/>
         <button
           className="btn btn-outline-warning"
           onClick={populateSampleFunctions}
@@ -378,7 +384,25 @@ const FunctionManifest = (props) => {
         </div>
         {functionManifest}
       </div>
+      <HelpText id="function_generator_help_text">Actions are APIs that your agent can use to retreive information or perform tasks.</HelpText>
+      <br/>
+      <Button onClick={createVirtualAgent} variant="primary">
+        Create Virtual Agent
+      </Button>
+
+      <AlertDialog
+        heading="Virtual Agent Created"
+        isOpen={isOpen}
+        onConfirm={handleClose}
+        onConfirmLabel="OK"
+        onDismiss={handleClose}
+        onDismissLabel="Cancel"
+        >
+        Success!
+      </AlertDialog>
+
     </div>
+    
   );
 };
 
