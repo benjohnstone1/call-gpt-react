@@ -362,16 +362,16 @@ const FunctionManifest = (props) => {
         </button>
         <br/>
         <button
-          className="btn btn-outline-warning"
+          className="btn btn-outline-primary"
           onClick={populateSampleFunctions}
         >
-          Populate Sample Functions
+          + Populate Sample Functions
         </button>
         <button
-          className="btn btn-outline-secondary"
+          className="btn btn-outline-danger"
           onClick={removeSampleFunctions}
         >
-          Remove Sample Functions
+          - Remove Sample Functions
         </button>
         <div>
           <label>Function Webhook Endpoint</label>
