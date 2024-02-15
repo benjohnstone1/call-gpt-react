@@ -39,57 +39,57 @@ const sampleFunctions = [
   },
   {
     name: "checkInventory",
-    desc: "Check the inventory of airpods, airpods pro or airpods max.",
+    desc: "Check the inventory of Nike Vaporfly, Air Max or Pegasus.",
     properties: [
       {
         name: "model",
         type: "String",
-        enum: ["airpods", "airpods pro", "airpods max"],
-        desc: "The model of airpods, either the airpods, airpods pro or airpods max",
+        enum: ["vaporfly", "air max", "pegasus"],
+        desc: "The model of the Nike shoe",
       },
     ],
     returnObjProperties: [
       {
         name: "stock",
         type: "Int",
-        desc: "An integer containing how many of the model are in currently in stock.",
+        desc: "An integer containing how many of the shoes are in currently in stock.",
       },
     ],
   },
   {
     name: "checkPrice",
-    desc: "Check the price of given model of airpods, airpods pro or airpods max.",
+    desc: "Check the price of a given Nike shoe.  Shoes include Vaporfly, Air Max and Pegasus.",
     properties: [
       {
         name: "model",
         type: "String",
-        enum: ["airpods", "airpods pro", "airpods max"],
-        desc: "The model of airpods, either the airpods, airpods pro or airpods max",
+        enum: ["vaporfly", "air max", "pegasus"],
+        desc: "The shoe model, either Vaporfly, Air Max or Pegasus",
       },
     ],
     returnObjProperties: [
       {
         name: "price",
         type: "Int",
-        desc: "the price of the model",
+        desc: "the price of the shoe",
       },
     ],
   },
   {
     name: "placeOrder",
-    desc: "Places an order for a set of airpods.",
+    desc: "Places an order for a pair of shoes.",
     properties: [
       {
         name: "model",
         type: "String",
-        enum: ["airpods", "airpods pro", "airpods max"],
-        desc: "The model of airpods, either the airpods, airpods pro or airpods max",
+        enum: ["vaporfly", "air max", "pegasus"],
+        desc: "The shoe model, either Vaporfly, Air Max or Pegasus",
       },
       {
-        name: "quantity",
+        name: "size",
         type: "Int",
         enum: [],
-        desc: "The number of airpods they want to order",
+        desc: "The size of the shoes they want to order",
       },
     ],
     returnObjProperties: [

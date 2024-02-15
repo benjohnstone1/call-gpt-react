@@ -1,3 +1,6 @@
 .largeInput {
     height: 200px
 }
+.App-header {
+    display: none;
+}

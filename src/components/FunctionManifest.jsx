@@ -1,7 +1,11 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FunctionGenerator from "./FunctionGenerator";
 import tools from "../tools";
 import axios from "axios";
+
+import { Button } from "@twilio-paste/core/button";
+import { HelpText } from "@twilio-paste/core/help-text";
+import { AlertDialog } from "@twilio-paste/core/alert-dialog";
 
 const FunctionManifest = (props) => {
   const [numFunctions, setNumFunctions] = useState(1);
@@ -11,6 +15,9 @@ const FunctionManifest = (props) => {
     "https://hackathon-open-ai-2890.twil.io"
   );
   const functionManifest = [];
+  const [isOpen, setIsOpen] = React.useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   let initialFunctions = [
     {
@@ -38,14 +45,16 @@ const FunctionManifest = (props) => {
 
   const [func, setFunc] = useState(initialFunctions);
 
-  const populateSampleFunctions = () => {
+  const populateSampleFunctions = (e) => {
+    e.preventDefault();
     setFunc(sampleFunctions);
     setNumFunctions(sampleFunctions.length);
     setNumParamProperties([1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
     setNumObjectProperties([1, 1, 1, 2]);
   };
 
-  const removeSampleFunctions = () => {
+  const removeSampleFunctions = (e) => {
+    e.preventDefault();
     setFunc(initialFunctions);
     setNumFunctions(1);
     setNumParamProperties([1]);
@@ -252,7 +261,8 @@ const FunctionManifest = (props) => {
     }
   };
 
-  const addFunction = () => {
+  const addFunction = (e) => {
+    e.preventDefault();
     setNumFunctions(numFunctions + 1);
     setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
     setNumObjectProperties([...numObjectProperties, 1]);
@@ -281,7 +291,8 @@ const FunctionManifest = (props) => {
     ]);
   };
 
-  const removeFunction = () => {
+  const removeFunction = (e) => {
+    e.preventDefault();
     if (numFunctions > 1) {
       setNumFunctions(numFunctions - 1);
       setNumParamProperties(numParamProperties.slice(0, numFunctions - 1)); //decrease array size e.g [2,1] becomes [2]
@@ -294,13 +305,14 @@ const FunctionManifest = (props) => {
     setWebhook(e.target.value);
   };
 
-  const createVirtualAgent = () => {
+  const createVirtualAgent = (e) => {
+    e.preventDefault();
     for (let i = 0; i < func.length; i++) {
       func[i].webhookURL = webhook + "/" + func[i].name;
     }
     console.log(func);
     axios
-      .post("http://localhost:3000/hackathon/set-user-context", {
+      .post("https://call-gpt-hack.fly.dev/hackathon/set-user-context", {
         greeting: props.initialGreeting,
         context: props.systemContext,
         languageContext: props.languageSettings,
@@ -308,7 +320,8 @@ const FunctionManifest = (props) => {
       })
       .then((response) => {
         console.log(response);
-        alert("Success! Created Virtual Agent");
+        //alert("Success! Created Virtual Agent");
+        handleOpen();
       })
       .catch((e) => {
         alert(e);
@@ -339,31 +352,29 @@ const FunctionManifest = (props) => {
     <div>
       <div style={{ border: "1px solid black" }} className="container">
         <div>
-          <b>Define Bot Fulfillment Actions</b>
+          <b>Function Manifest Generator</b>
         </div>
-        <button onClick={createVirtualAgent} className="btn btn-success">
-          Create Virtual Agent
-        </button>
         <button className="btn btn-outline-primary" onClick={addFunction}>
-          + Add Action
+          + Add Function
         </button>
         <button className="btn btn-outline-danger" onClick={removeFunction}>
-          - Remove Action
+          - Remove Function
         </button>
+        <br />
         <button
-          className="btn btn-outline-warning"
+          className="btn btn-outline-primary"
           onClick={populateSampleFunctions}
         >
-          Populate Sample Actions
+          + Populate Sample Functions
         </button>
         <button
-          className="btn btn-outline-secondary"
+          className="btn btn-outline-danger"
           onClick={removeSampleFunctions}
         >
-          Remove Sample Actions
+          - Remove Sample Functions
         </button>
         <div>
-          <label>Webhook Endpoint</label>
+          <label>Function Webhook Endpoint</label>
           <input
             className="form-control form-control-sm"
             id={"webhook"}
@@ -373,6 +384,25 @@ const FunctionManifest = (props) => {
         </div>
         {functionManifest}
       </div>
+      <HelpText id="function_generator_help_text">
+        Actions are APIs that your agent can use to retreive information or
+        perform tasks.
+      </HelpText>
+      <br />
+      <Button onClick={createVirtualAgent} variant="primary">
+        Create Virtual Agent
+      </Button>
+
+      <AlertDialog
+        heading="Virtual Agent Created"
+        isOpen={isOpen}
+        onConfirm={handleClose}
+        onConfirmLabel="OK"
+        onDismiss={handleClose}
+        onDismissLabel="Cancel"
+      >
+        Success!
+      </AlertDialog>
     </div>
   );
 };
