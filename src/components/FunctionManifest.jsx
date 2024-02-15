@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FunctionGenerator from "./FunctionGenerator";
 import tools from "../tools";
 import axios from "axios";
