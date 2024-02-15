@@ -306,7 +306,7 @@ const FunctionManifest = (props) => {
   };
 
   const createVirtualAgent = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     for (let i = 0; i < func.length; i++) {
       func[i].webhookURL = webhook + "/" + func[i].name;
     }
@@ -324,7 +324,7 @@ const FunctionManifest = (props) => {
         handleOpen();
       })
       .catch((e) => {
-        alert(e);
+        // alert(e);
         console.log(e);
       });
   };
