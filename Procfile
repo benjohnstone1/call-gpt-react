@@ -1,1 +1,0 @@
-web: export PORT=3001 && react-scripts start

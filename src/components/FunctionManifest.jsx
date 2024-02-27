@@ -312,12 +312,15 @@ const FunctionManifest = (props) => {
     }
     console.log(func);
     axios
-      .post("https://call-gpt-hack.fly.dev/hackathon/set-user-context", {
-        greeting: props.initialGreeting,
-        context: props.systemContext,
-        languageContext: props.languageSettings,
-        functionContext: func,
-      })
+      .post(
+        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context",
+        {
+          greeting: props.initialGreeting,
+          context: props.systemContext,
+          languageContext: props.languageSettings,
+          functionContext: func,
+        }
+      )
       .then((response) => {
         console.log(response);
         //alert("Success! Created Virtual Agent");
@@ -328,30 +331,6 @@ const FunctionManifest = (props) => {
         console.log(e);
       });
   };
-
-  // const createVirtualAgent = (e) => {
-  //   e.preventDefault();
-  //   for (let i = 0; i < func.length; i++) {
-  //     func[i].webhookURL = webhook + "/" + func[i].name;
-  //   }
-  //   console.log(func);
-  //   axios
-  //     .post("https://call-gpt-hack.fly.dev/hackathon/set-user-context", {
-  //       greeting: props.initialGreeting,
-  //       context: props.systemContext,
-  //       languageContext: props.languageSettings,
-  //       functionContext: func,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       //alert("Success! Created Virtual Agent");
-  //       handleOpen();
-  //     })
-  //     .catch((e) => {
-  //       alert(e);
-  //       console.log(e);
-  //     });
-  // };
 
   for (let i = 0; i < numFunctions; i++) {
     functionManifest.push(
