@@ -25,7 +25,7 @@ const sampleFunctions = [
       {
         name: "language",
         type: "String",
-        enum: ["english", "french", "italian", "spanish"],
+        enum: ["english", "french", "italian", "spanish", "german"],
         desc: "The types of languages the user could want to converse in",
       },
     ],
