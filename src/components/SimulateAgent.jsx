@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Heading } from "@twilio-paste/core/heading";
 
-import io from "socket.io-client";
 import Message from "./Messages";
-
-const socket = io("https://genai-phone-call-patient-grass-8186.fly.dev");
-// const socket = io("http://localhost:5001");
-// https://genai-phone-call-patient-grass-8186.fly.dev/
 
 const SimulateAgent = () => {
   const [messages, setMessages] = useState([]);
 
+  function isEmpty(array) {
+    return Array.isArray(array) && array.length === 0;
+  }
+
   useEffect(() => {
-    // receive message from server
-    socket.on("logs", (log, color) => {
-      setMessages([...messages, { text: log, color: color }]);
-    });
+    // SSE
+    const events = new EventSource(
+      "https://genai-phone-call-patient-grass-8186.fly.dev/events"
+    );
+    // const events = new EventSource("https://ben-johnstone.ngrok.io/events");
+
+    function getRealtimeData(data) {
+      console.log("====parsed data", data);
+      if (isEmpty(data)) {
+        // Do nothing
+      } else {
+        setMessages([...messages, { text: data.log, color: data.color }]);
+      }
+    }
+
+    events.onmessage = (e) => getRealtimeData(JSON.parse(e.data));
+
+    events.onerror = (e) => {
+      console.log(e);
+      events.close();
+    };
+    return () => {
+      events.close();
+    };
   }, [messages]);
 
   return (
@@ -25,12 +44,7 @@ const SimulateAgent = () => {
       </Heading>
       <div className="messages">
         {messages.map((message, index) => (
-          <Message
-            key={index}
-            username={message.username}
-            text={message.text}
-            color={message.color}
-          />
+          <Message key={index} text={message.text} color={message.color} />
         ))}
       </div>
     </div>
