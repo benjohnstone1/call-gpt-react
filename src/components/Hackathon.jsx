@@ -5,7 +5,7 @@ import { Heading } from "@twilio-paste/core/heading";
 import { Box } from "@twilio-paste/core/box";
 
 import { Form, FormControl } from "@twilio-paste/core/form";
-import { Input } from "@twilio-paste/core/input";
+// import { Input } from "@twilio-paste/core/input";
 import { Label } from "@twilio-paste/core/label";
 import { HelpText } from "@twilio-paste/core/help-text";
 import { Paragraph } from "@twilio-paste/core/paragraph";
@@ -21,7 +21,9 @@ import FunctionManifest from "./FunctionManifest";
 const Hackathon = () => {
   const [systemContext, setSystemContext] = useState("");
   const [initialGreeting, setInitialGreeting] = useState("");
-  const [languageSettings, setLanguageSettings] = useState("");
+  const [initialLanguage, setInitialLanguage] = useState("");
+  const [initialVoice, setInitialVoice] = useState("");
+  // const [languageSettings, setLanguageSettings] = useState("");
   const [template, setTemplate] = useState("Custom");
 
   const handleTemplateChange = (e) => {
@@ -30,18 +32,20 @@ const Hackathon = () => {
       setSystemContext(
         "You are an outbound sales representative selling Apple Airpods. You have a youthful and cheery personality. Keep your responses short and try to get them to purchase apple airpods."
       );
+      setInitialLanguage("de");
+      // setLanguageSettings("English & German");
       setInitialGreeting("Guten Tag! Wie kann ich dir helfen?");
-      setLanguageSettings("English & German");
     } else if (e.target.value === "Nike Shoes") {
       setSystemContext(
         "You are a customer support representative for Nike. You have a youthful and cheery personality. Keep your responses as brief as possible but make every attempt to keep the caller on the phone without being rude. Don't ask more than 1 question at a time. Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous. Speak out all prices to include the currency. Please help them decide between the Vaporfly, Air Max and Pegasus by asking questions like 'Do you prefer shoes that are for racing or for training?'. If they are trying to choose between the vaporfly and pegasus try asking them if they need a high mileage shoe. Once you know which shoe they would like ask them what size they would like to purchase and try to get them to place an order."
       );
-      setInitialGreeting("Bonjour");
-      setLanguageSettings("English & French");
+      setInitialLanguage("en");
+      setInitialGreeting("Hello");
+      // setLanguageSettings("English & French");
     } else {
       setSystemContext("");
       setInitialGreeting("");
-      setLanguageSettings("");
+      // setLanguageSettings("");
     }
   };
 
@@ -91,7 +95,7 @@ const Hackathon = () => {
               Describe your agent in detail
             </HelpText>
           </FormControl>
-          <FormControl>
+          {/* <FormControl>
             <Label htmlFor="languageSettings" required>
               Languge Settings
             </Label>
@@ -102,6 +106,37 @@ const Hackathon = () => {
               onChange={(e) => setLanguageSettings(e.target.value)}
               name="input3"
             />
+          </FormControl> */}
+          <FormControl>
+            <Label htmlFor="initialVoice" required>
+              Initial Voice
+            </Label>
+            <Select
+              id={"initialVoice"}
+              value={initialVoice}
+              onChange={(e) => setInitialVoice(e.target.value)}
+            >
+              <Option value="TxGEqnHWrfWFTfGW9XjX">Josh</Option>
+              <Option value="21m00Tcm4TlvDq8ikWAM">Rachel</Option>
+              <Option value="ThT5KcBeYPX3keUQqHPh">Dorothy</Option>
+              <Option value="bVMeCyTHy58xNoL34h3p">Jeremy</Option>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <Label htmlFor="initialLanguage" required>
+              Initial Language
+            </Label>
+            <Select
+              id={"initialLanguage"}
+              value={initialLanguage}
+              onChange={(e) => setInitialLanguage(e.target.value)}
+            >
+              <Option value="en">English - en</Option>
+              <Option value="fr">French - fr</Option>
+              <Option value="de">German -de</Option>
+              <Option value="es">Spanish - es</Option>
+              <Option value="it">Italian - it</Option>
+            </Select>
           </FormControl>
           <FormControl>
             <Label htmlFor="initialGreeting" required>
@@ -122,7 +157,9 @@ const Hackathon = () => {
             <FunctionManifest
               initialGreeting={initialGreeting}
               systemContext={systemContext}
-              languageSettings={languageSettings}
+              initialLanguage={initialLanguage}
+              initialVoice={initialVoice}
+              // languageSettings={languageSettings}
             />
           </FormControl>
         </Form>

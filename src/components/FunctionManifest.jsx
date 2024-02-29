@@ -318,7 +318,9 @@ const FunctionManifest = (props) => {
         {
           greeting: props.initialGreeting,
           context: props.systemContext,
-          languageContext: props.languageSettings,
+          initialLanguage: props.initialLanguage,
+          initialVoice: props.initialVoice,
+          // languageContext: props.languageSettings,
           functionContext: func,
         }
       )
