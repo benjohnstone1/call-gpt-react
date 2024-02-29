@@ -313,8 +313,8 @@ const FunctionManifest = (props) => {
     console.log(func);
     axios
       .post(
-        // "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context",
-        "https://ben-johnstone.ngrok.io/hackathon/set-user-context",
+        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context",
+        // "https://ben-johnstone.ngrok.io/hackathon/set-user-context",
         {
           greeting: props.initialGreeting,
           context: props.systemContext,
