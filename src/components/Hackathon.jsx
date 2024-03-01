@@ -21,8 +21,8 @@ import FunctionManifest from "./FunctionManifest";
 const Hackathon = () => {
   const [systemContext, setSystemContext] = useState("");
   const [initialGreeting, setInitialGreeting] = useState("");
-  const [initialLanguage, setInitialLanguage] = useState("");
-  const [initialVoice, setInitialVoice] = useState("");
+  const [initialLanguage, setInitialLanguage] = useState("en");
+  const [initialVoice, setInitialVoice] = useState("TxGEqnHWrfWFTfGW9XjX");
   // const [languageSettings, setLanguageSettings] = useState("");
   const [template, setTemplate] = useState("Custom");
 
@@ -33,7 +33,6 @@ const Hackathon = () => {
         "You are an outbound sales representative selling Apple Airpods. You have a youthful and cheery personality. Keep your responses short and try to get them to purchase apple airpods."
       );
       setInitialLanguage("de");
-      // setLanguageSettings("English & German");
       setInitialGreeting("Guten Tag! Wie kann ich dir helfen?");
     } else if (e.target.value === "Nike Shoes") {
       setSystemContext(
@@ -41,11 +40,9 @@ const Hackathon = () => {
       );
       setInitialLanguage("en");
       setInitialGreeting("Hello");
-      // setLanguageSettings("English & French");
     } else {
       setSystemContext("");
       setInitialGreeting("");
-      // setLanguageSettings("");
     }
   };
 
@@ -95,18 +92,6 @@ const Hackathon = () => {
               Describe your agent in detail
             </HelpText>
           </FormControl>
-          {/* <FormControl>
-            <Label htmlFor="languageSettings" required>
-              Languge Settings
-            </Label>
-            <Input
-              type="text"
-              id="languageSettings"
-              value={languageSettings}
-              onChange={(e) => setLanguageSettings(e.target.value)}
-              name="input3"
-            />
-          </FormControl> */}
           <FormControl>
             <Label htmlFor="initialVoice" required>
               Initial Voice

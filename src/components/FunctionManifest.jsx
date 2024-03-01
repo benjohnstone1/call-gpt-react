@@ -266,7 +266,6 @@ const FunctionManifest = (props) => {
     setNumFunctions(numFunctions + 1);
     setNumParamProperties([...numParamProperties, 1]); //increase array size e.g [2] becomes [2,1]
     setNumObjectProperties([...numObjectProperties, 1]);
-    console.log(numParamProperties);
     setFunc([
       ...func,
       {
@@ -306,11 +305,10 @@ const FunctionManifest = (props) => {
   };
 
   const createVirtualAgent = (e) => {
-    // e.preventDefault();
     for (let i = 0; i < func.length; i++) {
       func[i].webhookURL = webhook + "/" + func[i].name;
     }
-    console.log(func);
+    console.log(props);
     axios
       .post(
         "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context",
@@ -320,17 +318,14 @@ const FunctionManifest = (props) => {
           context: props.systemContext,
           initialLanguage: props.initialLanguage,
           initialVoice: props.initialVoice,
-          // languageContext: props.languageSettings,
           functionContext: func,
         }
       )
       .then((response) => {
-        console.log(response);
-        //alert("Success! Created Virtual Agent");
+        console.log(response.status, response.data);
         handleOpen();
       })
       .catch((e) => {
-        // alert(e);
         console.log(e);
       });
   };
