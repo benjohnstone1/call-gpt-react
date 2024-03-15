@@ -309,9 +309,19 @@ const FunctionManifest = (props) => {
       func[i].webhookURL = webhook + "/" + func[i].name;
     }
     console.log(props);
+    let serverUrl;
+    if (props.server === "Multi") {
+      serverUrl =
+        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context";
+    } else {
+      serverUrl =
+        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context";
+    }
+
+    console.log(serverUrl);
     axios
       .post(
-        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context",
+        serverUrl,
         // "https://ben-johnstone.ngrok.io/hackathon/set-user-context",
         {
           greeting: props.initialGreeting,

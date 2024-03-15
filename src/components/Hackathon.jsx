@@ -5,7 +5,6 @@ import { Heading } from "@twilio-paste/core/heading";
 import { Box } from "@twilio-paste/core/box";
 
 import { Form, FormControl } from "@twilio-paste/core/form";
-// import { Input } from "@twilio-paste/core/input";
 import { Label } from "@twilio-paste/core/label";
 import { HelpText } from "@twilio-paste/core/help-text";
 import { Paragraph } from "@twilio-paste/core/paragraph";
@@ -25,6 +24,17 @@ const Hackathon = () => {
   const [initialVoice, setInitialVoice] = useState("TxGEqnHWrfWFTfGW9XjX");
   // const [languageSettings, setLanguageSettings] = useState("");
   const [template, setTemplate] = useState("Custom");
+  const [server, setServer] = useState("Multi");
+  const [showComponent, setShowComponent] = useState(true);
+
+  const handleServerChange = (e) => {
+    setServer(e.target.value);
+    if (e.target.value === "Multi") {
+      setShowComponent(true);
+    } else {
+      setShowComponent(false);
+    }
+  };
 
   const handleTemplateChange = (e) => {
     setTemplate(e.target.value);
@@ -62,6 +72,20 @@ const Hackathon = () => {
 
           <FormControl>
             <Label htmlFor="author" required>
+              Select Server
+            </Label>
+            <Select
+              id={"server"}
+              value={server}
+              onChange={(e) => handleServerChange(e)}
+            >
+              <Option value="Multi">Multi-Language</Option>
+              <Option value="Retell">English Only - Low Latency</Option>
+            </Select>
+          </FormControl>
+
+          <FormControl>
+            <Label htmlFor="author" required>
               Select an Agent Template
             </Label>
             <Select
@@ -92,37 +116,42 @@ const Hackathon = () => {
               Describe your agent in detail
             </HelpText>
           </FormControl>
-          <FormControl>
-            <Label htmlFor="initialVoice" required>
-              Initial Voice
-            </Label>
-            <Select
-              id={"initialVoice"}
-              value={initialVoice}
-              onChange={(e) => setInitialVoice(e.target.value)}
-            >
-              <Option value="TxGEqnHWrfWFTfGW9XjX">Josh</Option>
-              <Option value="21m00Tcm4TlvDq8ikWAM">Rachel</Option>
-              <Option value="ThT5KcBeYPX3keUQqHPh">Dorothy</Option>
-              <Option value="bVMeCyTHy58xNoL34h3p">Jeremy</Option>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <Label htmlFor="initialLanguage" required>
-              Initial Language
-            </Label>
-            <Select
-              id={"initialLanguage"}
-              value={initialLanguage}
-              onChange={(e) => setInitialLanguage(e.target.value)}
-            >
-              <Option value="en">English - en</Option>
-              <Option value="fr">French - fr</Option>
-              <Option value="de">German -de</Option>
-              <Option value="es">Spanish - es</Option>
-              <Option value="it">Italian - it</Option>
-            </Select>
-          </FormControl>
+          {showComponent ? (
+            <FormControl>
+              <Label htmlFor="initialVoice" required>
+                Initial Voice
+              </Label>
+              <Select
+                id={"initialVoice"}
+                value={initialVoice}
+                onChange={(e) => setInitialVoice(e.target.value)}
+              >
+                <Option value="TxGEqnHWrfWFTfGW9XjX">Josh</Option>
+                <Option value="21m00Tcm4TlvDq8ikWAM">Rachel</Option>
+                <Option value="ThT5KcBeYPX3keUQqHPh">Dorothy</Option>
+                <Option value="bVMeCyTHy58xNoL34h3p">Jeremy</Option>
+              </Select>
+            </FormControl>
+          ) : null}
+          {showComponent ? (
+            <FormControl>
+              <Label htmlFor="initialLanguage" required>
+                Initial Language
+              </Label>
+              <Select
+                id={"initialLanguage"}
+                value={initialLanguage}
+                onChange={(e) => setInitialLanguage(e.target.value)}
+              >
+                <Option value="en">English - en</Option>
+                <Option value="fr">French - fr</Option>
+                <Option value="de">German -de</Option>
+                <Option value="es">Spanish - es</Option>
+                <Option value="it">Italian - it</Option>
+              </Select>
+            </FormControl>
+          ) : null}
+
           <FormControl>
             <Label htmlFor="initialGreeting" required>
               Initial Agent Greeting
@@ -140,11 +169,11 @@ const Hackathon = () => {
             <Label htmlFor="function_generator">Actions Settings</Label>
 
             <FunctionManifest
+              server={server}
               initialGreeting={initialGreeting}
               systemContext={systemContext}
               initialLanguage={initialLanguage}
               initialVoice={initialVoice}
-              // languageSettings={languageSettings}
             />
           </FormControl>
         </Form>
