@@ -11,12 +11,13 @@ const SimulateAgent = () => {
   }
   useEffect(() => {
     // SSE
-    // const events = new EventSource(
-    //   "https://genai-phone-call-patient-grass-8186.fly.dev/events"
-    // );
+    const events = new EventSource(
+      "https://genai-phone-call-patient-grass-8186.fly.dev/events"
+    );
 
-    // context switch based on state for virtual agent?
-    const events = new EventSource("https://ben-johnstone.ngrok.io/events");
+    const reTellevents = new EventSource(
+      "https://call-gpt-retell.fly.dev/events"
+    );
 
     function getRealtimeData(data) {
       if (isEmpty(data)) {
@@ -28,13 +29,19 @@ const SimulateAgent = () => {
     }
 
     events.onmessage = (e) => getRealtimeData(JSON.parse(e.data));
+    reTellevents.onmessage = (e) => getRealtimeData(JSON.parse(e.data));
 
     events.onerror = (e) => {
       console.log(e);
       events.close();
     };
+    reTellevents.onerror = (e) => {
+      console.log(e);
+      events.close();
+    };
     return () => {
       events.close();
+      reTellevents.close();
     };
   }, [messages]);
 
