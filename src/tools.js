@@ -1,26 +1,8 @@
 const sampleFunctions = [
-  // {
-  //   name: "sendToFlex",
-  //   desc: "If user wants to speak with a human agent or if you don't understand the request after trying to clarify multiple times",
-  //   properties: [
-  //     {
-  //       name: "language",
-  //       type: "String",
-  //       enum: ["english", "french", "italian", "spanish"],
-  //       desc: "The types of languages the user could want to converse in",
-  //     },
-  //   ],
-  //   returnObjProperties: [
-  //     {
-  //       name: "locale",
-  //       type: "String",
-  //       desc: "The language locale that should be returned",
-  //     },
-  //   ],
-  // },
   {
     name: "checkLanguage",
-    desc: "Check the language used in the conversation to know how to reply to the user, the user may choose to switch languages during the conversation",
+    retell_name: "check_language",
+    desc: "checking the language used in the conversation to know how to reply to the user, the user may choose to switch languages during the conversation",
     properties: [
       {
         name: "language",
@@ -39,7 +21,8 @@ const sampleFunctions = [
   },
   {
     name: "checkInventory",
-    desc: "Check the inventory of Nike Vaporfly, Air Max or Pegasus.",
+    retell_name: "check_inventory",
+    desc: "checking the inventory of Nike Vaporfly, Air Max or Pegasus.",
     properties: [
       {
         name: "model",
@@ -58,7 +41,8 @@ const sampleFunctions = [
   },
   {
     name: "checkPrice",
-    desc: "Check the price of a given Nike shoe.  Shoes include Vaporfly, Air Max and Pegasus.",
+    retell_name: "check_price",
+    desc: "checking the price of a given Nike shoe. Shoes include Vaporfly, Air Max and Pegasus.",
     properties: [
       {
         name: "model",
@@ -77,7 +61,8 @@ const sampleFunctions = [
   },
   {
     name: "placeOrder",
-    desc: "Places an order for a pair of shoes.",
+    retell_name: "place_order",
+    desc: "placing an order for a pair of shoes.",
     properties: [
       {
         name: "model",
@@ -85,12 +70,12 @@ const sampleFunctions = [
         enum: ["vaporfly", "air max", "pegasus"],
         desc: "The shoe model, either Vaporfly, Air Max or Pegasus",
       },
-      {
-        name: "size",
-        type: "Int",
-        enum: [],
-        desc: "The size of the shoes they want to order",
-      },
+      // {
+      //   name: "size",
+      //   type: "Int",
+      //   enum: [],
+      //   desc: "The size of the shoes they want to order",
+      // },
     ],
     returnObjProperties: [
       {

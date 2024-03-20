@@ -9,19 +9,20 @@ const SimulateAgent = () => {
   function isEmpty(array) {
     return Array.isArray(array) && array.length === 0;
   }
-
   useEffect(() => {
     // SSE
-    const events = new EventSource(
-      "https://genai-phone-call-patient-grass-8186.fly.dev/events"
-    );
-    // const events = new EventSource("https://ben-johnstone.ngrok.io/events");
+    // const events = new EventSource(
+    //   "https://genai-phone-call-patient-grass-8186.fly.dev/events"
+    // );
+
+    // context switch based on state for virtual agent?
+    const events = new EventSource("https://ben-johnstone.ngrok.io/events");
 
     function getRealtimeData(data) {
-      console.log("====parsed data", data);
       if (isEmpty(data)) {
         // Do nothing
       } else {
+        console.log("====parsed data", data);
         setMessages([...messages, { text: data.log, color: data.color }]);
       }
     }

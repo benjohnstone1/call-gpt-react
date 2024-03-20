@@ -49,7 +49,7 @@ const FunctionManifest = (props) => {
     e.preventDefault();
     setFunc(sampleFunctions);
     setNumFunctions(sampleFunctions.length);
-    setNumParamProperties([1, 1, 1, 2]); // hardcoded - can be calculated from sampleFunctions length
+    setNumParamProperties([1, 1, 1, 1]); // hardcoded - can be calculated from sampleFunctions length
     setNumObjectProperties([1, 1, 1, 2]);
   };
 
@@ -314,23 +314,19 @@ const FunctionManifest = (props) => {
       serverUrl =
         "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context";
     } else {
-      serverUrl =
-        "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context";
+      serverUrl = "https://ben-johnstone.ngrok.io/hackathon/set-user-context";
+      // https://ben-johnstone.ngrok.io/hackathon/set-user-context
     }
 
     console.log(serverUrl);
     axios
-      .post(
-        serverUrl,
-        // "https://ben-johnstone.ngrok.io/hackathon/set-user-context",
-        {
-          greeting: props.initialGreeting,
-          context: props.systemContext,
-          initialLanguage: props.initialLanguage,
-          initialVoice: props.initialVoice,
-          functionContext: func,
-        }
-      )
+      .post(serverUrl, {
+        greeting: props.initialGreeting,
+        context: props.systemContext,
+        initialLanguage: props.initialLanguage,
+        initialVoice: props.initialVoice,
+        functionContext: func,
+      })
       .then((response) => {
         console.log(response.status, response.data);
         handleOpen();
