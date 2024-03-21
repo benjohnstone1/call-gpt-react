@@ -16,7 +16,7 @@ const SimulateAgent = () => {
     );
 
     const reTellevents = new EventSource(
-      "https://call-gpt-retell.fly.dev/events"
+      "https://retell-backend-node-demo.fly.dev/events"
     );
 
     function getRealtimeData(data) {

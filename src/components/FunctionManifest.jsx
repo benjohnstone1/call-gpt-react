@@ -314,8 +314,9 @@ const FunctionManifest = (props) => {
       serverUrl =
         "https://genai-phone-call-patient-grass-8186.fly.dev/hackathon/set-user-context";
     } else {
-      serverUrl = "https://call-gpt-retell.fly.dev/hackathon/set-user-context";
-      // https://ben-johnstone.ngrok.io/hackathon/set-user-context
+      serverUrl =
+        "https://retell-backend-node-demo.fly.dev/hackathon/set-user-context";
+      // "https://retell-backend-node-demo.fly.dev/hackathon/set-user-context"
     }
 
     console.log(serverUrl);

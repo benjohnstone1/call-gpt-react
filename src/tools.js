@@ -6,7 +6,7 @@ const sampleFunctions = [
     properties: [
       {
         name: "language",
-        type: "String",
+        type: "string",
         enum: ["english", "french", "italian", "spanish", "german"],
         desc: "The types of languages the user could want to converse in",
       },
@@ -14,7 +14,7 @@ const sampleFunctions = [
     returnObjProperties: [
       {
         name: "locale",
-        type: "String",
+        type: "string",
         desc: "The language locale that should be returned",
       },
     ],
@@ -26,7 +26,7 @@ const sampleFunctions = [
     properties: [
       {
         name: "model",
-        type: "String",
+        type: "string",
         enum: ["vaporfly", "air max", "pegasus"],
         desc: "The model of the Nike shoe",
       },
@@ -34,7 +34,7 @@ const sampleFunctions = [
     returnObjProperties: [
       {
         name: "stock",
-        type: "Int",
+        type: "int",
         desc: "An integer containing how many of the shoes are in currently in stock.",
       },
     ],
@@ -46,7 +46,7 @@ const sampleFunctions = [
     properties: [
       {
         name: "model",
-        type: "String",
+        type: "string",
         enum: ["vaporfly", "air max", "pegasus"],
         desc: "The shoe model, either Vaporfly, Air Max or Pegasus",
       },
@@ -54,7 +54,7 @@ const sampleFunctions = [
     returnObjProperties: [
       {
         name: "price",
-        type: "Int",
+        type: "int",
         desc: "the price of the shoe",
       },
     ],
@@ -66,13 +66,13 @@ const sampleFunctions = [
     properties: [
       {
         name: "model",
-        type: "String",
+        type: "string",
         enum: ["vaporfly", "air max", "pegasus"],
         desc: "The shoe model, either Vaporfly, Air Max or Pegasus",
       },
       // {
       //   name: "size",
-      //   type: "Int",
+      //   type: "int",
       //   enum: [],
       //   desc: "The size of the shoes they want to order",
       // },
@@ -80,12 +80,12 @@ const sampleFunctions = [
     returnObjProperties: [
       {
         name: "price",
-        type: "Int",
+        type: "int",
         desc: "The total price of the order including tax",
       },
       {
         name: "orderNumber",
-        type: "Int",
+        type: "int",
         desc: "The order number associated with the order.",
       },
     ],
